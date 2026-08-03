@@ -7,7 +7,7 @@ import time
 import hashlib
 
 HEADERS = {'authorization': 'token '+ os.environ['ACCESS_TOKEN']}
-USER_NAME = os.environ['USER_NAME'] # 'Andrew6rant'
+USER_NAME = os.environ['USER_NAME'] # 'AdityaAradhya' for me, but you can change it to your username
 QUERY_COUNT = {'user_getter': 0, 'follower_getter': 0, 'graph_repos_stars': 0, 'recursive_loc': 0, 'graph_commits': 0, 'loc_query': 0}
 
 
@@ -22,14 +22,6 @@ def daily_readme(birthday):
 
 
 def format_plural(unit):
-    """
-    Returns a properly formatted number
-    e.g.
-    'day' + format_plural(diff.days) == 5
-    >>> '5 days'
-    'day' + format_plural(diff.days) == 1
-    >>> '1 day'
-    """
     return 's' if unit != 1 else ''
 
 
@@ -432,11 +424,9 @@ def formatter(query_type, difference, funct_return=False, whitespace=0):
 
 if __name__ == '__main__':
     """
-    Andrew Grant (Andrew6rant), 2022-2025
+    Aditya Aradhya (AdityaAradhya), 2022-2025
     """
     print('Calculation times:')
-    # define global variable for owner ID and calculate user's creation date
-    # e.g {'id': 'MDQ6VXNlcjU3MzMxMTM0'} and 2019-11-03T21:15:07Z for username 'Andrew6rant'
     user_data, user_time = perf_counter(user_getter, USER_NAME)
     OWNER_ID, acc_date = user_data
     formatter('account data', user_time)
@@ -449,14 +439,6 @@ if __name__ == '__main__':
     repo_data, repo_time = perf_counter(graph_repos_stars, 'repos', ['OWNER'])
     contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'])
     follower_data, follower_time = perf_counter(follower_getter, USER_NAME)
-
-    # several repositories that I've contributed to have since been deleted.
-    if OWNER_ID == {'id': 'MDQ6VXNlcjU3MzMxMTM0'}: # only calculate for user Andrew6rant
-        archived_data = add_archive()
-        for index in range(len(total_loc)-1):
-            total_loc[index] += archived_data[index]
-        contrib_data += archived_data[-1]
-        commit_data += int(archived_data[-2])
 
     for index in range(len(total_loc)-1): total_loc[index] = '{:,}'.format(total_loc[index]) # format added, deleted, and total LOC
 
